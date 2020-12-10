@@ -137,7 +137,6 @@ int main(int argc, char* argv[]) {
   }
   close(f2);
 
-  //printf("ids: %d %d %d\n", 0, child1, child2);
   parrent_work(child1, m_file1, child2, m_file2);
 
   return 0;
