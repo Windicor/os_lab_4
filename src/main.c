@@ -82,23 +82,23 @@ int read_name_and_open_file() {
 void error(char* buf, size_t size) { write(STDERR_FILENO, buf, size); }
 void check_file_id(int id) {
   if (id == -1) {
-    error("Файл не найден\n", 27);
+    error("File not found\n", 15);
     exit(-1);
   }
 }
 void* check_map_creation() {
   void* m_file = mmap(NULL, 2048, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
   if (m_file == MAP_FAILED) {
-    error("Не удалось создать отражение\n", 54);
+    error("Cannot create mmap\n", 19);
     exit(-2);
   }
   ((int*)m_file)[0] = 0;
   return m_file;
 }
-pid_t check_fork() {
-  pid_t fd = fork();
+int check_fork() {
+  int fd = fork();
   if (fd == -1) {
-    error("Не удалось создать процесс\n", 50);
+    error("Cannot create process\n", 22);
     exit(-3);
   }
   return fd;
@@ -107,7 +107,7 @@ void add_signals() {
   void (*func)(int);
   func = signal(SIGUSR1, update_is_it_time_to_terminate);
   if (func == SIG_IGN) {
-    error("Не удалось назначить сигнал\n", 54);
+    error("Cannot add signal\n", 18);
     exit(-4);
   }
 }
